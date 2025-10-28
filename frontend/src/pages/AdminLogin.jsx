@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { BACKEND_URL } from '@/config';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
