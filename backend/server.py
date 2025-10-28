@@ -50,6 +50,30 @@ class WaitlistEntry(BaseModel):
     email: EmailStr
     phone: str = Field(..., min_length=10, max_length=20)
 
+class OrderEntry(BaseModel):
+    customerName: str = Field(..., min_length=1, max_length=200)
+    customerEmail: EmailStr
+    customerPhone: str = Field(..., min_length=10, max_length=20)
+    customerAddress: str = Field(..., min_length=1)
+    items: int = Field(..., gt=0)
+    total: int = Field(..., gt=0)
+    timestamp: Optional[str] = None
+
+class AdminLogin(BaseModel):
+    username: str
+    password: str
+
+class AdminSession(BaseModel):
+    token: str
+    username: str
+
+# Simple in-memory session store (for production, use Redis or database)
+admin_sessions = {}
+
+# Admin credentials
+ADMIN_USERNAME = "KJO1"
+ADMIN_PASSWORD = "1percentclub@KJO1"
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
