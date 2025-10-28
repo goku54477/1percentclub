@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import ProgressIndicator from '@/components/ProgressIndicator';
 
-const BACKEND_URL = import.meta.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Confirmation = () => {
   const navigate = useNavigate();
