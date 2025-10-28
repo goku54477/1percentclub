@@ -74,6 +74,137 @@ admin_sessions = {}
 ADMIN_USERNAME = "KJO1"
 ADMIN_PASSWORD = "1percentclub@KJO1"
 
+# Dependency to verify admin token
+async def verify_admin_token(token: str):
+    if token not in admin_sessions:
+        raise HTTPException(status_code=401, detail="Invalid or expired session")
+    return admin_sessions[token]
+
+# Add your routes to the router instead of directly to app
+@api_router.post("/admin/login")
+async def admin_login(credentials: AdminLogin):
+    """Admin login endpoint"""
+    if credentials.username == ADMIN_USERNAME and credentials.password == ADMIN_PASSWORD:
+        # Generate session token
+        token = secrets.token_urlsafe(32)
+        admin_sessions[token] = {
+            "username": credentials.username,
+            "login_time": datetime.now(timezone.utc).isoformat()
+        }
+        
+        return {
+            "success": True,
+            "token": token,
+            "username": credentials.username
+        }
+    else:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+@api_router.post("/admin/logout")
+async def admin_logout(token: str):
+    """Admin logout endpoint"""
+    if token in admin_sessions:
+        del admin_sessions[token]
+    return {"success": True, "message": "Logged out successfully"}
+
+@api_router.get("/admin/waitlist")
+async def get_waitlist_data(token: str):
+    """Get all waitlist submissions"""
+    await verify_admin_token(token)
+    
+    try:
+        # Fetch all waitlist entries from MongoDB
+        waitlist_entries = await db.waitlist.find({}, {"_id": 0}).to_list(1000)
+        
+        return {
+            "success": True,
+            "count": len(waitlist_entries),
+            "data": waitlist_entries
+        }
+    except Exception as e:
+        logger.error(f"Error fetching waitlist data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/admin/orders")
+async def get_orders_data(token: str):
+    """Get all order submissions"""
+    await verify_admin_token(token)
+    
+    try:
+        # Fetch all order entries from MongoDB
+        orders = await db.orders.find({}, {"_id": 0}).to_list(1000)
+        
+        return {
+            "success": True,
+            "count": len(orders),
+            "data": orders
+        }
+    except Exception as e:
+        logger.error(f"Error fetching orders data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/admin/waitlist/download")
+async def download_waitlist_excel(token: str):
+    """Download waitlist data as Excel file"""
+    await verify_admin_token(token)
+    
+    try:
+        # Fetch all waitlist entries
+        waitlist_entries = await db.waitlist.find({}, {"_id": 0}).to_list(1000)
+        
+        if not waitlist_entries:
+            raise HTTPException(status_code=404, detail="No waitlist entries found")
+        
+        # Create DataFrame
+        df = pd.DataFrame(waitlist_entries)
+        
+        # Create Excel file in memory
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Waitlist')
+        
+        output.seek(0)
+        
+        return StreamingResponse(
+            output,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={"Content-Disposition": "attachment; filename=waitlist_submissions.xlsx"}
+        )
+    except Exception as e:
+        logger.error(f"Error generating waitlist Excel: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/admin/orders/download")
+async def download_orders_excel(token: str):
+    """Download orders data as Excel file"""
+    await verify_admin_token(token)
+    
+    try:
+        # Fetch all orders
+        orders = await db.orders.find({}, {"_id": 0}).to_list(1000)
+        
+        if not orders:
+            raise HTTPException(status_code=404, detail="No orders found")
+        
+        # Create DataFrame
+        df = pd.DataFrame(orders)
+        
+        # Create Excel file in memory
+        output = BytesIO()
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Orders')
+        
+        output.seek(0)
+        
+        return StreamingResponse(
+            output,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={"Content-Disposition": "attachment; filename=order_submissions.xlsx"}
+        )
+    except Exception as e:
+        logger.error(f"Error generating orders Excel: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
