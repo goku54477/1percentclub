@@ -36,9 +36,17 @@ const ClosedLanding = () => {
   return (
     <div 
       id="closed-landing"
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-8 animate-fadeIn"
+      className="min-h-screen flex flex-col items-center justify-center px-4 py-8 animate-fadeIn relative"
       style={{ animation: 'fadeIn 0.5s ease-in-out', backgroundColor: '#0b0b0a' }}
     >
+      {/* Hidden Admin Access Link */}
+      <a
+        href="/admin/login"
+        className="fixed bottom-4 right-4 w-3 h-3 bg-zinc-900 hover:bg-zinc-800 rounded-full opacity-10 hover:opacity-30 transition-all duration-300"
+        title="Admin Access"
+        style={{ zIndex: 1000 }}
+      />
+      
       <style>
         {`
           @keyframes fadeIn {
