@@ -74,7 +74,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
     try {
       // Send to backend API
-      const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       const response = await fetch(`${backendUrl}/api/waitlist`, {
         method: 'POST',
         headers: {
