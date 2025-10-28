@@ -96,7 +96,14 @@ const Checkout = () => {
     e.preventDefault();
     
     if (validateForm()) {
-      localStorage.setItem('checkoutData', JSON.stringify(formData));
+      // Save customer data for order submission
+      const customerData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        address: `${formData.address}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} - ${formData.pinCode}`
+      };
+      localStorage.setItem('checkoutData', JSON.stringify(customerData));
       navigate(`/confirmation?items=${getTotalItems()}&total=${getTotalPrice()}`);
     }
   };
