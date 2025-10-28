@@ -237,10 +237,20 @@ async def get_status_checks():
 @api_router.post("/waitlist")
 async def add_to_waitlist(entry: WaitlistEntry):
     """
-    Save waitlist entry to a Word document
+    Save waitlist entry to MongoDB and Word document
     """
     try:
-        # Define the document path
+        # Save to MongoDB
+        waitlist_doc = {
+            "firstName": entry.firstName,
+            "lastName": entry.lastName,
+            "email": entry.email,
+            "phone": entry.phone,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+        await db.waitlist.insert_one(waitlist_doc)
+        
+        # Also save to Word document for backup
         doc_path = ROOT_DIR / "waitlist_submissions.docx"
         
         # Check if document exists, if not create it with header
