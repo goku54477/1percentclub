@@ -336,6 +336,39 @@ async def download_waitlist():
         media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
 
+@api_router.post("/orders")
+async def create_order(order: OrderEntry):
+    """
+    Save order details to MongoDB
+    """
+    try:
+        order_doc = {
+            "customerName": order.customerName,
+            "customerEmail": order.customerEmail,
+            "customerPhone": order.customerPhone,
+            "customerAddress": order.customerAddress,
+            "items": order.items,
+            "total": order.total,
+            "timestamp": order.timestamp or datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.orders.insert_one(order_doc)
+        
+        logger.info(f"Order saved: {order.customerEmail} - ₹{order.total}")
+        
+        return {
+            "success": True,
+            "message": "Order saved successfully",
+            "data": order_doc
+        }
+        
+    except Exception as e:
+        logger.error(f"Error saving order: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save order: {str(e)}"
+        )
+
 # Include the router in the main app
 app.include_router(api_router)
 
