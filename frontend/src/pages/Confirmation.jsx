@@ -1,15 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Check } from 'lucide-react';
 import ProgressIndicator from '@/components/ProgressIndicator';
 
+const BACKEND_URL = import.meta.env.REACT_APP_BACKEND_URL || process.env.REACT_APP_BACKEND_URL;
+
 const Confirmation = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const items = parseInt(searchParams.get('items') || '1');
   const total = parseInt(searchParams.get('total') || '4999');
+
+  useEffect(() => {
+    // Save order data to backend
+    const saveOrder = async () => {
+      // Get customer data from localStorage (saved during checkout)
+      const customerData = JSON.parse(localStorage.getItem('checkoutData') || '{}');
+      
+      if (customerData.name && customerData.email) {
+        try {
+          await fetch(`${BACKEND_URL}/api/orders`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              customerName: customerData.name,
+              customerEmail: customerData.email,
+              customerPhone: customerData.phone || 'N/A',
+              customerAddress: customerData.address || 'N/A',
+              items: items,
+              total: total,
+              timestamp: new Date().toISOString()
+            }),
+          });
+        } catch (error) {
+          console.error('Failed to save order:', error);
+        }
+      }
+    };
+
+    saveOrder();
+  }, [items, total]);
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center text-center px-4 py-8" data-testid="confirmation-page">
