@@ -7,6 +7,8 @@ import Store from "@/pages/Store";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Confirmation from "@/pages/Confirmation";
+import AdminLogin from "@/pages/AdminLogin";
+import AdminDashboard from "@/pages/AdminDashboard";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { Toaster } from "@/components/ui/sonner";
 import PageTransition from "@/components/PageTransition";
