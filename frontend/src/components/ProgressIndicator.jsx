@@ -17,20 +17,22 @@ const ProgressIndicator = ({ currentStep }) => {
   const getProgressWidth = () => {
     if (currentStep === 1) return '0%';
     if (currentStep === 2) return '50%';
-    if (currentStep === 3) return '50%'; // Stop at 50% to prevent overflow
+    if (currentStep === 3) return '100%';
     return '0%';
   };
 
   return (
-    <div className="relative mb-12 w-full max-w-2xl mx-auto" data-testid="progress-indicator">
-      {/* Background line */}
-      <div className="absolute top-5 left-0 right-0 h-0.5 bg-zinc-700" style={{ zIndex: 0 }} />
+    <div className="relative mb-12 w-full max-w-2xl mx-auto px-5" data-testid="progress-indicator">
+      {/* Background line - constrained within circles */}
+      <div className="absolute top-5 h-0.5 bg-zinc-700" style={{ left: '20px', right: '20px', zIndex: 0 }} />
       
       {/* Progress line - only extends to completed steps */}
       <div
-        className="absolute top-5 left-0 h-0.5 bg-green-500 transition-all duration-500"
+        className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
         style={{
+          left: '20px',
           width: getProgressWidth(),
+          maxWidth: 'calc(100% - 40px)',
           zIndex: 1
         }}
         data-testid="progress-line"
