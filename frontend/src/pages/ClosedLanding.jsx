@@ -191,12 +191,6 @@ const ClosedLanding = () => {
         </div>
       </div>
 
-      {/* Waitlist Modal */}
-      <WaitlistModal 
-        isOpen={showWaitlistModal}
-        onClose={() => setShowWaitlistModal(false)}
-      />
-
       {/* Login Transition Animation */}
       <AnimatePresence>
         {showTransition && <LoginTransition />}
