@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
-import WaitlistModal from '../components/WaitlistModal';
 import LoginTransition from '../components/LoginTransition';
 
 const ClosedLanding = () => {
