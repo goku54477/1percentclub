@@ -50,8 +50,6 @@ const ProgressIndicator = ({ currentStep }) => {
                   transition-all duration-300
                   ${status === 'completed' 
                     ? 'bg-green-500 text-white' 
-                    : status === 'active' 
-                    ? 'bg-yellow-600 text-black' 
                     : 'bg-zinc-700 text-zinc-400'
                   }
                 `}
@@ -66,8 +64,6 @@ const ProgressIndicator = ({ currentStep }) => {
                   text-xs uppercase font-semibold
                   ${status === 'completed' 
                     ? 'text-green-400' 
-                    : status === 'active' 
-                    ? 'text-white' 
                     : 'text-zinc-400'
                   }
                 `}
