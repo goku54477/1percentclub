@@ -14,19 +14,8 @@ const Checkout = () => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  const [formData, setFormData] = useState({
-    email: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    apartment: '',
-    city: '',
-    state: '',
-    pinCode: '',
-    phone: ''
-  });
-
-  const [errors, setErrors] = useState({});
+  // Tally form handles data collection
+  const [formCompleted, setFormCompleted] = useState(false);
 
   const getProductImage = (color) => {
     const imageMap = {
