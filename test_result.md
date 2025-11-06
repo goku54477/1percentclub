@@ -216,6 +216,7 @@ metadata:
 test_plan:
   current_focus:
     - "Tally form popup integration for waitlist - needs user testing"
+    - "Tally inline embed for checkout shipping information - needs user testing"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
