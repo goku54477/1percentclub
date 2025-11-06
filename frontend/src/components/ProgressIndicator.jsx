@@ -23,44 +23,46 @@ const ProgressIndicator = ({ currentStep }) => {
 
   return (
     <div className="relative mb-12 w-full max-w-2xl mx-auto" data-testid="progress-indicator">
+      {/* Background line - positioned between circle centers */}
+      <div 
+        className="absolute top-5 h-0.5 bg-zinc-700" 
+        style={{ 
+          left: '20px',
+          right: '20px',
+          zIndex: 0 
+        }} 
+      />
+      
+      {/* Progress line - only extends to completed steps */}
+      <div
+        className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
+        style={{
+          left: '20px',
+          right: currentStep === 3 ? '20px' : 'auto',
+          width: currentStep === 3 ? 'auto' : (currentStep === 2 ? '50%' : '0%'),
+          zIndex: 1
+        }}
+        data-testid="progress-line"
+      />
+
       {/* Steps */}
-      <div className="relative flex justify-between" style={{ zIndex: 2 }}>
-        {/* Background line - positioned between circle centers */}
-        <div 
-          className="absolute top-5 h-0.5 bg-zinc-700" 
-          style={{ 
-            left: '20px',
-            right: '20px',
-            zIndex: 0 
-          }} 
-        />
-        
-        {/* Progress line - only extends to completed steps */}
-        <div
-          className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
-          style={{
-            left: '20px',
-            right: currentStep === 3 ? '20px' : 'auto',
-            width: currentStep === 3 ? 'auto' : (currentStep === 2 ? '50%' : '0%'),
-            zIndex: 1
-          }}
-          data-testid="progress-line"
-        />
+      <div className="relative flex justify-between" style={{ zIndex: 10 }}>
         {steps.map((step, index) => {
           const status = getStepStatus(step.number);
           
           return (
-            <div key={step.id} className="flex flex-col items-center" data-testid={`step-${step.id}`}>
+            <div key={step.id} className="flex flex-col items-center relative" style={{ zIndex: 10 }} data-testid={`step-${step.id}`}>
               {/* Circle */}
               <div
                 className={`
                   w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm mb-2
-                  transition-all duration-300
+                  transition-all duration-300 relative
                   ${status === 'completed' 
                     ? 'bg-green-500 text-white' 
                     : 'bg-zinc-700 text-zinc-400'
                   }
                 `}
+                style={{ zIndex: 10 }}
                 data-testid={`step-circle-${step.id}`}
               >
                 {status === 'completed' ? <Check className="w-5 h-5" /> : step.number}
