@@ -219,6 +219,8 @@ agent_communication:
     message: "Mobile view styling corrections: (1) Adjusted logo size to w-28 h-28 for proper mobile proportions, (2) Made subtitle lighter (font-light) with proper spacing, (3) Fixed JOIN WAITLIST button - changed to fixed width (max-width: 320px) centered with flexbox, reduced padding (py-3) and text size (text-sm) to match mobile screenshot, (4) Changed social media text from 'FOLLOW US AT' to 'FOLLOW US'."
   - agent: "main"
     message: "Confirmation page fixes: (1) Fixed progress indicator line overlap - changed line to stop at 50% (step 2) when on step 3, preventing green line from extending beyond and overlapping with step 3 circle, (2) Updated confirmation text - changed 'Welcome to the exclusive club! 🔥' to 'Welcome to the 1%', changed 'merchandise' to 'merch', changed 'within' to 'withing' as specified, changed 'express delivery' wording. Progress line now correctly displays without overlap."
+  - agent: "main"
+    message: "Integrated Tally form popup for waitlist collection on landing page. Replaced custom WaitlistModal with Tally's embedded widget (Form ID: VLElMM). Button now triggers Tally popup modal (600px width) with data-tally-open attribute. Tally script loaded in index.html. Old custom modal and backend integration removed from landing page flow. Data now collected directly by Tally platform. Ready for user testing."
 
 backend:
   - task: "Waitlist Word Document Integration"
