@@ -77,6 +77,7 @@ const ProgressIndicator = ({ currentStep }) => {
             </div>
           );
         })}
+        </div>
       </div>
     </div>
   );
