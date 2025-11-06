@@ -38,63 +38,15 @@ const Checkout = () => {
     return cart.reduce((total, item) => total + (item.quantity || 1), 0);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-    
-    if (!formData.firstName) newErrors.firstName = 'First name is required';
-    if (!formData.lastName) newErrors.lastName = 'Last name is required';
-    if (!formData.address) newErrors.address = 'Address is required';
-    if (!formData.city) newErrors.city = 'City is required';
-    if (!formData.state) newErrors.state = 'State is required';
-    if (!formData.pinCode) newErrors.pinCode = 'PIN code is required';
-    if (!formData.phone) newErrors.phone = 'Phone number is required';
-    
-    if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = 'Phone must be 10 digits';
-    }
-    
-    if (formData.pinCode && !/^\d{6}$/.test(formData.pinCode)) {
-      newErrors.pinCode = 'PIN code must be 6 digits';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    if (validateForm()) {
-      // Save customer data for order submission
-      const customerData = {
-        name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        phone: formData.phone,
-        address: `${formData.address}${formData.apartment ? ', ' + formData.apartment : ''}, ${formData.city}, ${formData.state} - ${formData.pinCode}`
-      };
-      localStorage.setItem('checkoutData', JSON.stringify(customerData));
-      navigate(`/confirmation?items=${getTotalItems()}&total=${getTotalPrice()}`);
-    }
+  const handleContinueToPayment = () => {
+    // Save minimal cart data for confirmation page
+    const orderData = {
+      items: getTotalItems(),
+      total: getTotalPrice(),
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('checkoutData', JSON.stringify(orderData));
+    navigate(`/confirmation?items=${getTotalItems()}&total=${getTotalPrice()}`);
   };
 
   const handleBackToCart = () => {
