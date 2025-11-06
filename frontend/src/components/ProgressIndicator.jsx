@@ -16,28 +16,31 @@ const ProgressIndicator = ({ currentStep }) => {
   // Calculate progress line width based on current step
   const getProgressWidth = () => {
     if (currentStep === 1) return '0%';
-    if (currentStep === 2) return 'calc(50% - 20px)';
-    if (currentStep === 3) return 'calc(100% - 40px)'; // Full progress on confirmation, accounting for padding
+    if (currentStep === 2) return '50%';
+    if (currentStep === 3) return '100%';
     return '0%';
   };
 
   return (
-    <div className="relative mb-12 w-full max-w-2xl mx-auto px-5" data-testid="progress-indicator">
-      {/* Background line */}
-      <div className="absolute top-5 left-5 right-5 h-0.5 bg-zinc-700" style={{ zIndex: 0 }} />
-      
-      {/* Progress line - only extends to completed steps */}
-      <div
-        className="absolute top-5 left-5 h-0.5 bg-green-500 transition-all duration-500"
-        style={{
-          width: getProgressWidth(),
-          zIndex: 1
-        }}
-        data-testid="progress-line"
-      />
+    <div className="relative mb-12 w-full max-w-2xl mx-auto overflow-hidden" data-testid="progress-indicator">
+      <div className="px-5">
+        {/* Background line */}
+        <div className="absolute top-5 left-5 right-5 h-0.5 bg-zinc-700" style={{ zIndex: 0 }} />
+        
+        {/* Progress line - only extends to completed steps */}
+        <div
+          className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
+          style={{
+            left: '20px',
+            right: currentStep === 3 ? '20px' : 'auto',
+            width: currentStep === 3 ? 'auto' : getProgressWidth(),
+            zIndex: 1
+          }}
+          data-testid="progress-line"
+        />
 
-      {/* Steps */}
-      <div className="relative flex justify-between" style={{ zIndex: 2 }}>
+        {/* Steps */}
+        <div className="relative flex justify-between" style={{ zIndex: 2 }}>
         {steps.map((step, index) => {
           const status = getStepStatus(step.number);
           
