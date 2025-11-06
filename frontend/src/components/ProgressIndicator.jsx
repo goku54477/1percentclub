@@ -28,7 +28,7 @@ const ProgressIndicator = ({ currentStep }) => {
         className="absolute top-5 h-0.5 bg-zinc-700" 
         style={{ 
           left: '20px',
-          width: 'calc(100% - 40px)',
+          width: 'calc(100% - 60px)',
           zIndex: 0 
         }} 
       />
@@ -38,7 +38,7 @@ const ProgressIndicator = ({ currentStep }) => {
         className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
         style={{
           left: '20px',
-          width: currentStep === 3 ? 'calc(100% - 40px)' : (currentStep === 2 ? 'calc(50% - 20px)' : '0%'),
+          width: currentStep === 3 ? 'calc(100% - 60px)' : (currentStep === 2 ? 'calc(50% - 30px)' : '0%'),
           zIndex: 1
         }}
         data-testid="progress-line"
