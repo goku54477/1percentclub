@@ -151,7 +151,11 @@ const ClosedLanding = () => {
         {/* Join Waitlist Button */}
         <div className="w-full flex justify-center mt-6 px-4">
           <button
-            onClick={() => setShowWaitlistModal(true)}
+            data-tally-open="VLElMM"
+            data-tally-layout="modal"
+            data-tally-width="600"
+            data-tally-emoji-text="👋"
+            data-tally-emoji-animation="wave"
             className="bg-red-600 hover:bg-red-700 text-white font-normal py-3 px-12 rounded-md uppercase tracking-widest text-sm transition-all glow-hover"
             style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', maxWidth: '320px' }}
           >
