@@ -182,6 +182,18 @@ frontend:
       - working: true
         agent: "main"
         comment: "Created LoginTransition component matching GitHub video reference. Features: (1) Full-screen red background (#dc2626), (2) Centered 1% logo with scale animation (0 to 1.2 to 1 over 1.2s), (3) Pixelated white block particles animating around logo with staggered delays (12 blocks), (4) 'LOADING...' text below logo with animated dots (infinite pulse), (5) Subtle glitch overlay effect with horizontal movement and opacity changes. Total duration 3 seconds before navigating to /store. Integrated with AnimatePresence in ClosedLanding. Tested - triggers on correct password entry, displays smooth animation, navigates after 3s."
+  
+  - task: "Replace custom waitlist modal with Tally form popup"
+    implemented: true
+    working: "NA"
+    file: "src/pages/ClosedLanding.jsx, public/index.html"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Integrated Tally form popup to replace custom waitlist modal. Changes: (1) Added Tally widget script (https://tally.so/widgets/embed.js) to index.html, (2) Updated JOIN WAITLIST button with Tally data attributes (data-tally-open='VLElMM', data-tally-layout='modal', data-tally-width='600'), (3) Removed WaitlistModal component import and usage, (4) Removed showWaitlistModal state. Tally form now opens in popup/modal when button is clicked. Form ID: VLElMM. Data collection handled directly by Tally platform. Old backend /api/waitlist endpoint still exists but no longer used by landing page."
 
 metadata:
   created_by: "main_agent"
