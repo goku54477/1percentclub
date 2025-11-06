@@ -249,6 +249,8 @@ agent_communication:
     message: "Integrated Tally form popup for waitlist collection on landing page. Replaced custom WaitlistModal with Tally's embedded widget (Form ID: VLElMM). Button now triggers Tally popup modal (600px width) with data-tally-open attribute. Tally script loaded in index.html. Old custom modal and backend integration removed from landing page flow. Data now collected directly by Tally platform. Ready for user testing."
   - agent: "main"
     message: "Replaced checkout form with inline Tally embed (Form ID: 7RlDV0). Removed all custom form fields and validation logic. Tally iframe embedded at 700px height with dark theme styling. User workflow: (1) Fill Tally form inline in checkout page, (2) Click 'Continue to Payment' button below form to proceed, (3) Navigate to confirmation page. Shipping data collected directly by Tally. Order summary with cart items and totals remains visible on right side. Frontend compiled successfully. Ready for user testing."
+  - agent: "main"
+    message: "Updated progress indicator to show full flow completion on confirmation page. Now when user reaches confirmation (step 3), all three steps display green checkmarks: Cart ✓, Information ✓, Confirmation ✓. Green progress line extends 100% across all steps. Removed intermediate 'active' state - steps are now either completed (green with checkmark) or inactive (gray with number). Complete visual indication that order flow is finished. Frontend compiled successfully. Ready for user testing."
 
 backend:
   - task: "Waitlist Word Document Integration"
