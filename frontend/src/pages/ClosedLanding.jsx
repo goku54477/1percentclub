@@ -8,7 +8,6 @@ const ClosedLanding = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isShaking, setIsShaking] = useState(false);
-  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showTransition, setShowTransition] = useState(false);
 
   const handlePasswordSubmit = (e) => {
