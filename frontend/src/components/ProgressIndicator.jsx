@@ -22,13 +22,13 @@ const ProgressIndicator = ({ currentStep }) => {
   };
 
   return (
-    <div className="relative mb-12 w-full max-w-2xl mx-auto" data-testid="progress-indicator">
+    <div className="relative mb-12 w-full max-w-2xl mx-auto overflow-hidden" data-testid="progress-indicator">
       {/* Background line - positioned between circle centers */}
       <div 
         className="absolute top-5 h-0.5 bg-zinc-700" 
         style={{ 
           left: '20px',
-          right: '20px',
+          width: 'calc(100% - 40px)',
           zIndex: 0 
         }} 
       />
@@ -38,8 +38,7 @@ const ProgressIndicator = ({ currentStep }) => {
         className="absolute top-5 h-0.5 bg-green-500 transition-all duration-500"
         style={{
           left: '20px',
-          right: currentStep === 3 ? '20px' : 'auto',
-          width: currentStep === 3 ? 'auto' : (currentStep === 2 ? '50%' : '0%'),
+          width: currentStep === 3 ? 'calc(100% - 40px)' : (currentStep === 2 ? 'calc(50% - 20px)' : '0%'),
           zIndex: 1
         }}
         data-testid="progress-line"
