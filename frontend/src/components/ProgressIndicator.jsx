@@ -16,8 +16,8 @@ const ProgressIndicator = ({ currentStep }) => {
   // Calculate progress line width based on current step
   const getProgressWidth = () => {
     if (currentStep === 1) return '0%';
-    if (currentStep === 2) return '50%';
-    if (currentStep === 3) return '100%'; // Full progress on confirmation
+    if (currentStep === 2) return 'calc(50% - 20px)';
+    if (currentStep === 3) return 'calc(100% - 40px)'; // Full progress on confirmation, accounting for padding
     return '0%';
   };
 
