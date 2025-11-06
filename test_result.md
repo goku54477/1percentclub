@@ -234,6 +234,8 @@ agent_communication:
     message: "Confirmation page fixes: (1) Fixed progress indicator line overlap - changed line to stop at 50% (step 2) when on step 3, preventing green line from extending beyond and overlapping with step 3 circle, (2) Updated confirmation text - changed 'Welcome to the exclusive club! 🔥' to 'Welcome to the 1%', changed 'merchandise' to 'merch', changed 'within' to 'withing' as specified, changed 'express delivery' wording. Progress line now correctly displays without overlap."
   - agent: "main"
     message: "Integrated Tally form popup for waitlist collection on landing page. Replaced custom WaitlistModal with Tally's embedded widget (Form ID: VLElMM). Button now triggers Tally popup modal (600px width) with data-tally-open attribute. Tally script loaded in index.html. Old custom modal and backend integration removed from landing page flow. Data now collected directly by Tally platform. Ready for user testing."
+  - agent: "main"
+    message: "Replaced checkout form with inline Tally embed (Form ID: 7RlDV0). Removed all custom form fields and validation logic. Tally iframe embedded at 700px height with dark theme styling. User workflow: (1) Fill Tally form inline in checkout page, (2) Click 'Continue to Payment' button below form to proceed, (3) Navigate to confirmation page. Shipping data collected directly by Tally. Order summary with cart items and totals remains visible on right side. Frontend compiled successfully. Ready for user testing."
 
 backend:
   - task: "Waitlist Word Document Integration"
