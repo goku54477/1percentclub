@@ -68,13 +68,30 @@ const Confirmation = () => {
           <Card className="bg-zinc-900 border-zinc-800 px-6 py-6">
             <h3 className="text-white text-xl font-semibold mb-2">What's Next?</h3>
             <ul className="text-zinc-300 space-y-2 text-left text-sm">
-              <li>• Email confirmation sent</li>
+              <li>• Email confirmation will be sent once the payment is confirmed</li>
               <li>• Tracking updates via email</li>
               <li>• Delivery in 5-7 days</li>
-              <li>• Questions? Contact support</li>
             </ul>
           </Card>
         </div>
+      </div>
+
+      {/* Payment Details */}
+      <div className="max-w-2xl mb-10 w-full">
+        <Card className="bg-zinc-900 border-zinc-800 px-8 py-8">
+          <h3 className="text-white text-2xl font-bold mb-6 uppercase tracking-wider">Payment Details</h3>
+          <p className="text-zinc-300 text-lg mb-6 font-light">
+            Complete your payment using UPI:
+          </p>
+          <div className="bg-[#d4af37] rounded-lg px-6 py-6 mb-6">
+            <p className="text-black text-2xl font-semibold text-center">
+              talldarksavage@oksbi
+            </p>
+          </div>
+          <p className="text-zinc-300 text-base font-light leading-relaxed">
+            Send the exact amount and your order will be processed within 24 hours
+          </p>
+        </Card>
       </div>
 
       {/* Action Buttons */}
