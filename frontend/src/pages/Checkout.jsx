@@ -15,6 +15,13 @@ const Checkout = () => {
   // Tally form handles data collection
   const [formCompleted, setFormCompleted] = useState(false);
 
+  // Initialize Tally widget
+  useEffect(() => {
+    if (window.Tally) {
+      window.Tally.loadEmbeds();
+    }
+  }, []);
+
   const getProductImage = (color) => {
     const imageMap = {
       'Turquoise Blue': '/assets/blue-model.png',
