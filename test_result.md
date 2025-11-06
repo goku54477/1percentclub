@@ -194,6 +194,18 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Integrated Tally form popup to replace custom waitlist modal. Changes: (1) Added Tally widget script (https://tally.so/widgets/embed.js) to index.html, (2) Updated JOIN WAITLIST button with Tally data attributes (data-tally-open='VLElMM', data-tally-layout='modal', data-tally-width='600'), (3) Removed WaitlistModal component import and usage, (4) Removed showWaitlistModal state. Tally form now opens in popup/modal when button is clicked. Form ID: VLElMM. Data collection handled directly by Tally platform. Old backend /api/waitlist endpoint still exists but no longer used by landing page."
+  
+  - task: "Replace checkout form with Tally inline embed for shipping information"
+    implemented: true
+    working: "NA"
+    file: "src/pages/Checkout.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Replaced custom checkout form with inline Tally embed for shipping information collection. Changes: (1) Removed all form fields (email, firstName, lastName, address, apartment, city, state, pinCode, phone), (2) Removed form validation logic (validateForm, handleInputChange, errors state), (3) Embedded Tally form inline using iframe (Form ID: 7RlDV0, height: 700px), (4) Simplified data flow - shipping data collected by Tally directly, (5) Updated handleContinueToPayment to save minimal order data (items count, total, timestamp) to localStorage, (6) Kept 'Back to Cart' and 'Continue to Payment' buttons below form, (7) Added useEffect to initialize Tally widget on component mount. Order summary remains on right side. User fills Tally form then clicks 'Continue to Payment' to proceed to confirmation page."
 
 metadata:
   created_by: "main_agent"
