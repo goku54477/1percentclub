@@ -206,6 +206,18 @@ frontend:
       - working: "NA"
         agent: "main"
         comment: "Replaced custom checkout form with inline Tally embed for shipping information collection. Changes: (1) Removed all form fields (email, firstName, lastName, address, apartment, city, state, pinCode, phone), (2) Removed form validation logic (validateForm, handleInputChange, errors state), (3) Embedded Tally form inline using iframe (Form ID: 7RlDV0, height: 700px), (4) Simplified data flow - shipping data collected by Tally directly, (5) Updated handleContinueToPayment to save minimal order data (items count, total, timestamp) to localStorage, (6) Kept 'Back to Cart' and 'Continue to Payment' buttons below form, (7) Added useEffect to initialize Tally widget on component mount. Order summary remains on right side. User fills Tally form then clicks 'Continue to Payment' to proceed to confirmation page."
+  
+  - task: "Update progress indicator to show full completion on confirmation page"
+    implemented: true
+    working: "NA"
+    file: "src/components/ProgressIndicator.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Updated ProgressIndicator component to show complete flow on confirmation page. Changes: (1) Modified getStepStatus logic - all steps up to and including currentStep now show as 'completed' (green with checkmark), (2) Updated getProgressWidth to return '100%' when currentStep is 3, extending green line all the way across, (3) Removed 'active' state styling (yellow) - steps are now either completed (green) or inactive (gray), (4) When on confirmation page (step 3), all three circles show green with checkmarks and progress line extends 100%. Visual flow: Cart ✓ → Information ✓ → Confirmation ✓ with full green progress line."
 
 metadata:
   created_by: "main_agent"
