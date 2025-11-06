@@ -22,13 +22,13 @@ const ProgressIndicator = ({ currentStep }) => {
   };
 
   return (
-    <div className="relative mb-12 w-full max-w-2xl mx-auto" data-testid="progress-indicator">
+    <div className="relative mb-12 w-full max-w-2xl mx-auto px-5" data-testid="progress-indicator">
       {/* Background line */}
-      <div className="absolute top-5 left-0 right-0 h-0.5 bg-zinc-700" style={{ zIndex: 0 }} />
+      <div className="absolute top-5 left-5 right-5 h-0.5 bg-zinc-700" style={{ zIndex: 0 }} />
       
       {/* Progress line - only extends to completed steps */}
       <div
-        className="absolute top-5 left-0 h-0.5 bg-green-500 transition-all duration-500"
+        className="absolute top-5 left-5 h-0.5 bg-green-500 transition-all duration-500"
         style={{
           width: getProgressWidth(),
           zIndex: 1
