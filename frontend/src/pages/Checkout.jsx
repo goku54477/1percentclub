@@ -91,200 +91,63 @@ const Checkout = () => {
         <ProgressIndicator currentStep={2} />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Checkout Form */}
+          {/* Checkout Form - Tally Embed */}
           <div className="lg:col-span-3">
             <Card className="p-6 md:p-8 bg-zinc-900 border-zinc-800">
-              <form onSubmit={handleSubmit}>
-                {/* Contact Information */}
-                <div className="mb-8">
-                  <h2 className="text-xl font-semibold text-white mb-4 uppercase tracking-wide">
-                    Contact Information
-                  </h2>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="email" className="text-zinc-300">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="your@email.com"
-                        className="bg-zinc-800 border-zinc-700 text-white"
-                        data-testid="email-input"
-                      />
-                      {errors.email && (
-                        <p className="text-red-400 text-sm mt-1">{errors.email}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+              {/* Tally Form Title */}
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-white mb-2 uppercase tracking-wide">
+                  Shipping Information
+                </h2>
+                <p className="text-zinc-400 text-sm">
+                  Please fill out your shipping details below
+                </p>
+              </div>
 
-                {/* Shipping Address */}
-                <div className="mb-8">
-                  <h2 className="text-xl font-semibold text-white mb-4 uppercase tracking-wide">
-                    Shipping Address
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName" className="text-zinc-300">First Name *</Label>
-                        <Input
-                          id="firstName"
-                          type="text"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleInputChange}
-                          placeholder="John"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="first-name-input"
-                        />
-                        {errors.firstName && (
-                          <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="lastName" className="text-zinc-300">Last Name *</Label>
-                        <Input
-                          id="lastName"
-                          type="text"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                          placeholder="Doe"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="last-name-input"
-                        />
-                        {errors.lastName && (
-                          <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>
-                        )}
-                      </div>
-                    </div>
+              {/* Tally Inline Embed */}
+              <div className="mb-6">
+                <iframe
+                  data-tally-src="https://tally.so/r/7RlDV0"
+                  width="100%"
+                  height="700"
+                  frameBorder="0"
+                  marginHeight="0"
+                  marginWidth="0"
+                  title="Shipping Information"
+                  style={{
+                    border: 'none',
+                    borderRadius: '8px',
+                    backgroundColor: '#18181b'
+                  }}
+                ></iframe>
+              </div>
 
-                    <div>
-                      <Label htmlFor="address" className="text-zinc-300">Address *</Label>
-                      <Input
-                        id="address"
-                        type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleInputChange}
-                        placeholder="123 Main Street"
-                        className="bg-zinc-800 border-zinc-700 text-white"
-                        data-testid="address-input"
-                      />
-                      {errors.address && (
-                        <p className="text-red-400 text-sm mt-1">{errors.address}</p>
-                      )}
-                    </div>
+              {/* Navigation Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <Button
+                  type="button"
+                  onClick={handleBackToCart}
+                  variant="outline"
+                  className="border-zinc-700 text-white hover:bg-zinc-800"
+                  data-testid="back-to-cart-btn"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Cart
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleContinueToPayment}
+                  className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-bold"
+                  data-testid="continue-to-payment-btn"
+                >
+                  Continue to Payment
+                </Button>
+              </div>
 
-                    <div>
-                      <Label htmlFor="apartment" className="text-zinc-300">Apartment, suite, etc. (optional)</Label>
-                      <Input
-                        id="apartment"
-                        type="text"
-                        name="apartment"
-                        value={formData.apartment}
-                        onChange={handleInputChange}
-                        placeholder="Apartment 4B"
-                        className="bg-zinc-800 border-zinc-700 text-white"
-                        data-testid="apartment-input"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="city" className="text-zinc-300">City *</Label>
-                        <Input
-                          id="city"
-                          type="text"
-                          name="city"
-                          value={formData.city}
-                          onChange={handleInputChange}
-                          placeholder="Mumbai"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="city-input"
-                        />
-                        {errors.city && (
-                          <p className="text-red-400 text-sm mt-1">{errors.city}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="state" className="text-zinc-300">State *</Label>
-                        <Input
-                          id="state"
-                          type="text"
-                          name="state"
-                          value={formData.state}
-                          onChange={handleInputChange}
-                          placeholder="Maharashtra"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="state-input"
-                        />
-                        {errors.state && (
-                          <p className="text-red-400 text-sm mt-1">{errors.state}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="pinCode" className="text-zinc-300">PIN Code *</Label>
-                        <Input
-                          id="pinCode"
-                          type="text"
-                          name="pinCode"
-                          value={formData.pinCode}
-                          onChange={handleInputChange}
-                          placeholder="400001"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="pin-code-input"
-                        />
-                        {errors.pinCode && (
-                          <p className="text-red-400 text-sm mt-1">{errors.pinCode}</p>
-                        )}
-                      </div>
-                      <div>
-                        <Label htmlFor="phone" className="text-zinc-300">Phone *</Label>
-                        <Input
-                          id="phone"
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="9876543210"
-                          className="bg-zinc-800 border-zinc-700 text-white"
-                          data-testid="phone-input"
-                        />
-                        {errors.phone && (
-                          <p className="text-red-400 text-sm mt-1">{errors.phone}</p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Submit Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Button
-                    type="button"
-                    onClick={handleBackToCart}
-                    variant="outline"
-                    className="border-zinc-700 text-white hover:bg-zinc-800"
-                    data-testid="back-to-cart-btn"
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Cart
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-bold"
-                    data-testid="continue-to-payment-btn"
-                  >
-                    Continue to Payment
-                  </Button>
-                </div>
-              </form>
+              {/* Helper Text */}
+              <p className="text-zinc-500 text-xs mt-4 text-center">
+                Please complete the shipping form above before continuing
+              </p>
             </Card>
           </div>
 
