@@ -203,9 +203,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Landing page hoodie image replacement completed"
-    - "Checkout transition animation implemented and working"
-    - "Landing page design updated to match reference image - red ENTER button, social media icons, bold fonts"
+    - "Tally form popup integration for waitlist - needs user testing"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
