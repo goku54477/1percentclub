@@ -100,7 +100,7 @@ const ClosedLanding = () => {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-white text-2xl md:text-4xl text-center font-light uppercase tracking-wider mb-10" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.1em' }}>
+        <p className="text-white text-lg sm:text-xl md:text-4xl text-center font-light uppercase tracking-wide mb-10 whitespace-nowrap" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.08em' }}>
           UNLOCK ACCESS. JOIN WAITLIST
         </p>
 
