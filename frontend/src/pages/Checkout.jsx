@@ -99,17 +99,7 @@ const Checkout = () => {
           {/* Checkout Form - Tally Embed */}
           <div className="lg:col-span-3">
             <Card className="p-6 md:p-8 bg-zinc-900 border-zinc-800">
-              {/* Tally Form Title */}
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-white mb-2 uppercase tracking-wide">
-                  Shipping Information
-                </h2>
-                <p className="text-zinc-400 text-sm">
-                  Please fill out your shipping details below
-                </p>
-              </div>
 
-              {/* Tally Inline Embed */}
               <div className="mb-6">
                 <iframe
                   data-tally-src="https://tally.so/r/7RlDV0"

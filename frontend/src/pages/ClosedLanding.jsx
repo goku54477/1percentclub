@@ -67,6 +67,14 @@ const ClosedLanding = () => {
           .button-glow:hover {
             box-shadow: 0 0 15px rgba(234, 179, 8, 0.5);
           }
+
+          .primary-btn {
+            background-color: #d10121;
+          }
+
+          .primary-btn:hover {
+            background-color: #b1001c;
+          }
         `}
       </style>
 
@@ -76,27 +84,28 @@ const ClosedLanding = () => {
           <img 
             src="https://app.trickle.so/storage/public/images/usr_14ec922cf0000001/1240476a-bf23-4bf4-9259-64052a0d8ef0.jpeg"
             alt="1% Logo"
-            className="w-28 h-28 md:w-32 md:h-32 object-contain drop-shadow-2xl"
+            className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-2xl"
           />
         </div>
 
         {/* Main Heading */}
         <h1 className="font-extrabold text-white text-center uppercase mb-3" style={{ 
           fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-          fontSize: 'clamp(2.5rem, 11vw, 6rem)',
+          fontSize: 'clamp(2rem, 14vw, 6rem)',
           letterSpacing: '0.02em',
-          lineHeight: '1.1'
+          lineHeight: '1',
+          whiteSpace: 'nowrap'
         }}>
           WE'RE CLOSED
         </h1>
 
         {/* Subtitle */}
-        <p className="text-white text-base md:text-3xl text-center font-light uppercase tracking-wider mb-4" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.1em' }}>
+        <p className="text-white text-2xl md:text-4xl text-center font-light uppercase tracking-wider mb-10" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.1em' }}>
           UNLOCK ACCESS. JOIN WAITLIST
         </p>
 
         {/* Password Form */}
-        <form onSubmit={handlePasswordSubmit} className="w-full max-w-2xl mt-8">
+        <form onSubmit={handlePasswordSubmit} className="w-full max-w-2xl mt-0">
           <div className="flex flex-row items-stretch">
             <input
               type="password"
@@ -117,7 +126,7 @@ const ClosedLanding = () => {
             />
             <button
               type="submit"
-              className="px-6 md:px-10 py-4 bg-red-600 hover:bg-red-700 text-white font-normal rounded-r-lg uppercase tracking-widest transition-all"
+              className="px-6 md:px-10 py-4 text-white font-normal rounded-r-lg uppercase tracking-widest transition-all primary-btn"
               style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}
             >
               ENTER
@@ -131,8 +140,8 @@ const ClosedLanding = () => {
         </form>
 
         {/* Hoodie Showcase */}
-        <div className="w-full mt-8 mb-6 flex justify-center">
-          <div className="max-w-6xl w-full">
+        <div className="w-full mt-12 mb-8 flex justify-center">
+          <div className="max-w-3xl w-full">
             <img
               src="/assets/landing-hoodies.png"
               alt="1% Hoodies Collection"
@@ -149,7 +158,7 @@ const ClosedLanding = () => {
             data-tally-width="600"
             data-tally-emoji-text="👋"
             data-tally-emoji-animation="wave"
-            className="bg-red-600 hover:bg-red-700 text-white font-normal py-3 px-12 rounded-md uppercase tracking-widest text-sm transition-all glow-hover"
+            className="text-white font-normal py-3 px-12 rounded-md uppercase tracking-widest text-sm transition-all glow-hover primary-btn"
             style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', maxWidth: '320px' }}
           >
             Join Waitlist
