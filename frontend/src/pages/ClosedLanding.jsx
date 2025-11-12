@@ -89,10 +89,10 @@ const ClosedLanding = () => {
         </div>
 
         {/* Main Heading */}
-        <h1 className="font-extrabold text-white text-center uppercase mb-3" style={{ 
+        <h1 className="font-extrabold text-white text-center uppercase mb-0" style={{ 
           fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-          fontSize: 'clamp(2rem, 14vw, 6rem)',
-          letterSpacing: '0.02em',
+          fontSize: 'clamp(1.4rem, 10.5vw, 5rem)',
+          letterSpacing: '0.005em',
           lineHeight: '1',
           whiteSpace: 'nowrap'
         }}>
@@ -100,7 +100,7 @@ const ClosedLanding = () => {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-white text-lg sm:text-xl md:text-4xl text-center font-light uppercase tracking-wide mb-10 whitespace-nowrap" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.08em' }}>
+        <p className="text-white text-lg sm:text-xl md:text-4xl text-center font-light uppercase tracking-wide mb-24 whitespace-nowrap" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif', letterSpacing: '0.08em' }}>
           UNLOCK ACCESS. JOIN WAITLIST
         </p>
 
