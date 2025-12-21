@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { ensureVisitorId, recordSelection } from '@/lib/supabaseClient';
 
 const Store = () => {
   const navigate = useNavigate();
@@ -203,14 +204,35 @@ const HoodieCard = ({ hoodie, onAddToCart, isCartFull }) => {
   const sizes = ['M', 'L', 'XL', 'XXL', 'XXXL'];
   const [selectedSize, setSelectedSize] = useState('');
 
-  const handleRequestAccess = () => {
+  const handleRequestAccess = async () => {
     if (selectedSize && !isCartFull) {
-      onAddToCart({
+      const item = {
         name: hoodie.name,
         size: selectedSize,
         color: hoodie.color,
         price: 4899
-      });
+      }
+      onAddToCart(item);
+      try {
+        const visitorId = ensureVisitorId();
+        const res = await recordSelection({
+          visitor_id: visitorId,
+          product_name: item.name,
+          color: item.color,
+          size: item.size,
+          price: item.price,
+          source_page: 'store',
+          created_at: new Date().toISOString()
+        });
+        if (res?.error) {
+          const msg = typeof res.error?.message === 'string' ? res.error.message : 'Unknown error';
+          toast.error('Could not record selection', { description: `REST: ${msg}` });
+        } else {
+          toast.success('Selection saved', { description: `${item.name} (${item.color}, ${item.size})` });
+        }
+      } catch (_e) {
+        toast.error('Could not record selection', { description: 'REST: Network error while saving selection' });
+      }
       setSelectedSize('');
     }
   };

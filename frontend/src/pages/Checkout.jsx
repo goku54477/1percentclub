@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import ProgressIndicator from '@/components/ProgressIndicator';
+import { ensureVisitorId, saveShippingDetails } from '@/lib/supabaseClient';
+import { toast } from 'sonner';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -12,15 +17,23 @@ const Checkout = () => {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Tally form handles data collection
   const [formCompleted, setFormCompleted] = useState(false);
+  const [shipping, setShipping] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    addy: '',
+    houseNumber: '',
+    city: '',
+    state: '',
+    pinCode: '',
+    phone: ''
+  });
 
-  // Initialize Tally widget
   useEffect(() => {
-    if (window.Tally) {
-      window.Tally.loadEmbeds();
-    }
-  }, []);
+    const required = ['firstName', 'lastName', 'email', 'addy', 'houseNumber', 'city', 'state', 'pinCode', 'phone'];
+    setFormCompleted(required.every(k => String(shipping[k]).trim().length > 0));
+  }, [shipping]);
 
   const getProductImage = (color) => {
     const imageMap = {
@@ -43,14 +56,38 @@ const Checkout = () => {
     return cart.reduce((total, item) => total + (item.quantity || 1), 0);
   };
 
-  const handleContinueToPayment = () => {
-    // Save minimal cart data for confirmation page
+  const handleContinueToPayment = async () => {
     const orderData = {
       items: getTotalItems(),
       total: getTotalPrice(),
       timestamp: new Date().toISOString()
     };
     localStorage.setItem('checkoutData', JSON.stringify(orderData));
+    try {
+      const visitorId = ensureVisitorId();
+      const res = await saveShippingDetails({
+        visitor_id: visitorId,
+        first_name: shipping.firstName,
+        last_name: shipping.lastName,
+        email: shipping.email,
+        addy: shipping.addy,
+        house_flat_number: shipping.houseNumber,
+        city: shipping.city,
+        state: shipping.state,
+        pin_code: shipping.pinCode,
+        phone_number: shipping.phone,
+        cart_json: JSON.stringify(cart),
+        total_amount: getTotalPrice(),
+        created_at: new Date().toISOString()
+      });
+      if (res?.error) {
+        toast.error('Could not save shipping details', { description: `REST: ${res.error.message}` });
+      } else {
+        toast.success('Shipping details saved');
+      }
+    } catch (_e) {
+      toast.error('Unexpected error while saving shipping', { description: 'REST: Network error' });
+    }
     navigate(`/confirmation?items=${getTotalItems()}&total=${getTotalPrice()}`);
   };
 
@@ -96,25 +133,98 @@ const Checkout = () => {
         <ProgressIndicator currentStep={2} />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Checkout Form - Tally Embed */}
+          {/* Checkout Form - Shipping Form */}
           <div className="lg:col-span-3">
             <Card className="p-6 md:p-8 bg-zinc-900 border-zinc-800">
-
-              <div className="mb-6">
-                <iframe
-                  data-tally-src="https://tally.so/r/7RlDV0"
-                  width="100%"
-                  height="700"
-                  frameBorder="0"
-                  marginHeight="0"
-                  marginWidth="0"
-                  title="Shipping Information"
-                  style={{
-                    border: 'none',
-                    borderRadius: '8px',
-                    backgroundColor: '#18181b'
-                  }}
-                ></iframe>
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-white">First Name</Label>
+                    <Input
+                      value={shipping.firstName}
+                      onChange={e => setShipping(s => ({ ...s, firstName: e.target.value }))}
+                      placeholder="First Name"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white">Last Name</Label>
+                    <Input
+                      value={shipping.lastName}
+                      onChange={e => setShipping(s => ({ ...s, lastName: e.target.value }))}
+                      placeholder="Last Name"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-white">Email</Label>
+                    <Input
+                      type="email"
+                      value={shipping.email}
+                      onChange={e => setShipping(s => ({ ...s, email: e.target.value }))}
+                      placeholder="Email"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white">Phone Number</Label>
+                    <Input
+                      value={shipping.phone}
+                      onChange={e => setShipping(s => ({ ...s, phone: e.target.value }))}
+                      placeholder="Phone Number"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-white">Addy</Label>
+                  <Textarea
+                    value={shipping.addy}
+                    onChange={e => setShipping(s => ({ ...s, addy: e.target.value }))}
+                    placeholder="Address"
+                    className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 min-h-[80px]"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-white">House/Flat Number</Label>
+                  <Input
+                    value={shipping.houseNumber}
+                    onChange={e => setShipping(s => ({ ...s, houseNumber: e.target.value }))}
+                    placeholder="House/Flat Number"
+                    className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-white">City</Label>
+                    <Input
+                      value={shipping.city}
+                      onChange={e => setShipping(s => ({ ...s, city: e.target.value }))}
+                      placeholder="City"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white">State</Label>
+                    <Input
+                      value={shipping.state}
+                      onChange={e => setShipping(s => ({ ...s, state: e.target.value }))}
+                      placeholder="State"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-white">PIN Code</Label>
+                    <Input
+                      value={shipping.pinCode}
+                      onChange={e => setShipping(s => ({ ...s, pinCode: e.target.value }))}
+                      placeholder="PIN Code"
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Navigation Buttons */}
@@ -132,17 +242,15 @@ const Checkout = () => {
                 <Button
                   type="button"
                   onClick={handleContinueToPayment}
-                  className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-bold"
+                  className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-black font-bold disabled:opacity-50"
+                  disabled={!formCompleted}
                   data-testid="continue-to-payment-btn"
                 >
                   Continue to Payment
                 </Button>
               </div>
 
-              {/* Helper Text */}
-              <p className="text-zinc-500 text-xs mt-4 text-center">
-                Please complete the shipping form above before continuing
-              </p>
+              <p className="text-zinc-500 text-xs mt-4 text-center">Please complete the shipping form before continuing</p>
             </Card>
           </div>
 
